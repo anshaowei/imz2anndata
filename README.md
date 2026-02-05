@@ -2,17 +2,7 @@
 
 `imz2anndata` converts **imzML (spatial metabolomics / MSI)** data into **AnnData (`.h5ad`)**.
 
-## Why this project
-
-Spatial metabolomics still lacks a focused, practical bridge from raw MSI spectra to a unified matrix representation that plugs directly into the Scanpy/AnnData ecosystem.
-
-This project aims to fill that gap and become a key infrastructure layer in MSI analysis workflows:
-
-- Input: `imzML + ibd`
-- Processing: per-pixel spectrum loading and OpenMS peak extraction
-- Output: aligned sparse feature matrix packaged as `AnnData`
-
-## Current pipeline (MVP)
+## Pipeline
 
 1. Read spectra from `imzML` (pixel by pixel)
 2. Extract signals with OpenMS peak picking
@@ -118,9 +108,3 @@ For quick runs, `.imzML` files directly under `data/` are also auto-discovered.
 By default, `min_feature_occurrence=3`, meaning a feature bin must appear in at least
 3 spectra/pixels to be kept in the output matrix. This reduces one-off single-pixel noise
 features in typical MSI runs.
-
-## Notes for next iterations
-
-- Alignment is currently fixed-width `m/z` binning (can be extended to ppm/tolerance-based alignment).
-- OpenMS parameterization is intentionally minimal in this version and will be expanded.
-- Benchmarking and quality reports (feature count, sparsity, coverage) are planned.

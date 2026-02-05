@@ -8,8 +8,8 @@ from imz2anndata.pipeline import run_pipeline
 
 
 def get_project_root() -> Path:
-    """获取项目根目录路径"""
-    return Path(__file__).resolve().parents[2]  # 向上两级到达项目根目录
+    """Return the project root path."""
+    return Path(__file__).resolve().parents[2]
 
 
 def first_imzml_file() -> Path | None:
