@@ -1,0 +1,13 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.hypothesis/
+.DS_Store
+
+# Local MSI data
+/data/*
+!/data/README.md
+
+# IDE
+.idea/
