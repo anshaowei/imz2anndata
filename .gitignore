@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.hypothesis/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+.cache
+.coverage
+*.egg-info/
+dist/
+build/
+.codex_tmp/
+
+# Local MSI data
+/data/*
+!/data/README.md
+
+# IDE
+.idea/
