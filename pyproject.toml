@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "imz2anndata"
-version = "0.1.1"
+version = "0.1.0"
 description = "Convert imzML (MSI) datasets into AnnData (.h5ad)."
 readme = "README.md"
 requires-python = ">=3.11"

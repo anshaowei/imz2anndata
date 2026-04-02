@@ -28,7 +28,7 @@ pip install .
 For local development:
 
 ```bash
-pip install -r requirements-dev.txt
+pip install -r requirements.txt
 ```
 
 ## CLI Usage
@@ -76,6 +76,17 @@ adata = run_pipeline(
 )
 ```
 
+## Examples
+
+An end-to-end bladder MSI demo notebook is available at [`examples/bladder_msi_demo.ipynb`](examples/bladder_msi_demo.ipynb).
+
+The notebook expects the local demo dataset files at:
+
+- `data/Bladder-MSI.imzML`
+- `data/Bladder-MSI.ibd`
+
+The mouse bladder MSI dataset is accessible via the ProteomeXchange Consortium under dataset identifier `PXD001283`.
+
 ## Tests
 
 Run the full test suite:
@@ -90,11 +101,16 @@ Run only integration tests:
 python -m unittest discover -s tests/integration -p "test_*.py" -v
 ```
 
-Integration tests look for local `.imzML` files under `data/raw/` and skip automatically when no test data is present.
+Integration tests look for local `.imzML` files under `data/` and `data/raw/`, and skip automatically when no test data is present.
 
 ## Local Data
 
-Local validation data is not committed by default. If you want to exercise the integration tests with real inputs, place files under:
+Local validation data is not committed by default. If you want to exercise the integration tests or run the demo notebook with real inputs, place files under:
+
+- `data/Bladder-MSI.imzML`
+- `data/Bladder-MSI.ibd`
+
+Optional alternative layout for integration tests:
 
 - `data/raw/sample.imzML`
 - `data/raw/sample.ibd`

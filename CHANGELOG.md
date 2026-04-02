@@ -2,15 +2,19 @@
 
 All notable changes to this project are documented in this file.
 
-## [0.1.0] - 2026-02-05
+## [0.1.0] - 2026-04-02
+
+Initial public release.
 
 ### Added
-- Packaging metadata via `pyproject.toml` and console entry point `imz2anndata`.
-- Open-source license file (`MIT`).
-- Initial `CHANGELOG.md`.
-- CI workflow for unit/integration test execution with `unittest`.
+- Core `imzML` to `AnnData` conversion pipeline with CLI and Python API support.
+- Automatic spectrum-mode detection with conditional OpenMS peak picking for profile-mode inputs.
+- `m/z` alignment, sparse feature-matrix construction, and AnnData export to `.h5ad`.
+- Optional spatial feature filtering and assessment utilities.
+- Unit and integration test suite.
+- AnnData schema documentation in [`docs/anndata_schema.md`](docs/anndata_schema.md).
+- Public example notebook in [`examples/bladder_msi_demo.ipynb`](examples/bladder_msi_demo.ipynb).
+- Dataset usage and redistribution guidance in [`data/README.md`](data/README.md).
 
-### Changed
-- Default `min_feature_occurrence` from `1` to `3` to reduce single-pixel noise features in default runs.
-- Integration tests now resolve project-root `data/` paths robustly and close parser handles explicitly.
-- Real-data notebook path handling stabilized to avoid local subfolder `data` confusion.
+### Notes
+- The repository includes example code and tests, but raw MSI datasets are not redistributed with the public release.

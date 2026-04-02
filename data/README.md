@@ -1,16 +1,28 @@
-# Data Layout
+# Data Files
 
-Place local validation data here when running integration tests with real inputs.
+This repository may include example analysis code that expects a local bladder MSI dataset under the `data/` directory, but the project is intended to be published without redistributing the raw dataset files.
 
-Recommended structure:
+## Demo Dataset
 
-- `data/raw/` for source `imzML` and paired `ibd` files
-- `data/results/` for generated `h5ad` outputs or temporary summaries
+The demo notebook uses the following local paths:
 
-Examples:
+- `data/Bladder-MSI.imzML`
+- `data/Bladder-MSI.ibd`
 
-- `data/raw/sample.imzML`
-- `data/raw/sample.ibd`
-- `data/results/sample.h5ad`
+The mouse bladder MSI dataset is accessible via the ProteomeXchange Consortium under dataset identifier `PXD001283`.
 
-The integration tests in `tests/integration/` automatically scan `data/raw/` for `.imzML` files and skip when none are present.
+## Public Repository Policy
+
+- Analysis example code and notebooks may be included in the public repository.
+- Raw MSI data files are not required to be committed to the repository.
+- To run the demo notebook locally, download the dataset separately and place the paired `imzML` and `ibd` files in this `data/` directory with the filenames shown above.
+
+## Suggested Layout
+
+Recommended local layout for users who want to reproduce the demo:
+
+- `data/Bladder-MSI.imzML`
+- `data/Bladder-MSI.ibd`
+- `data/results/` for generated `h5ad` outputs
+
+The integration tests in `tests/integration/` discover `.imzML` files from both `data/` and the optional `data/raw/` layout. They skip automatically when compatible local test data is not present.

@@ -18,8 +18,12 @@ def get_project_root() -> Path:
 
 
 def find_imzml_files() -> list[Path]:
-    data_dir = get_project_root() / "data" / "raw"
-    return sorted(data_dir.glob("*.imzML"))
+    project_root = get_project_root()
+    candidates: list[Path] = []
+    for data_dir in [project_root / "data", project_root / "data" / "raw"]:
+        candidates.extend(sorted(data_dir.glob("*.imzML")))
+    # Deduplicate while preserving order in case files are symlinked or mirrored.
+    return list(dict.fromkeys(candidates))
 
 
 def array_hash(values: np.ndarray) -> str:
@@ -67,7 +71,7 @@ class DatasetConsistencyTests(unittest.TestCase):
     def test_core_consistency_and_reproducibility(self):
         imzml_files = find_imzml_files()
         if not imzml_files:
-            self.skipTest("No .imzML file found under data/raw/")
+            self.skipTest("No .imzML file found under data/ or data/raw/")
 
         for input_imzml in imzml_files:
             with self.subTest(dataset=input_imzml.name):
@@ -130,7 +134,7 @@ class DatasetConsistencyTests(unittest.TestCase):
     def test_downstream_ion_images_against_reference(self):
         imzml_files = find_imzml_files()
         if not imzml_files:
-            self.skipTest("No .imzML file found under data/raw/")
+            self.skipTest("No .imzML file found under data/ or data/raw/")
 
         input_imzml = imzml_files[0]
         output_h5ad = Path(f"/tmp/{input_imzml.stem}_downstream.h5ad")

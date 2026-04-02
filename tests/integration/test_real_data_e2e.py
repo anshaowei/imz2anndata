@@ -14,16 +14,19 @@ def get_project_root() -> Path:
 
 def first_imzml_file() -> Path | None:
     project_root = get_project_root()
-    data_path = project_root / "data" / "raw"
-    candidates = sorted(data_path.glob("*.imzML"))
-    return candidates[0] if candidates else None
+    candidate_dirs = [project_root / "data", project_root / "data" / "raw"]
+    for data_path in candidate_dirs:
+        candidates = sorted(data_path.glob("*.imzML"))
+        if candidates:
+            return candidates[0]
+    return None
 
 
 class RealDataE2ETests(unittest.TestCase):
     def test_pipeline_with_real_data(self):
         input_imzml = first_imzml_file()
         if input_imzml is None:
-            self.skipTest("No .imzML file found under data/raw/")
+            self.skipTest("No .imzML file found under data/ or data/raw/")
 
         output_h5ad = Path("/tmp/imz2anndata_real_e2e.h5ad")
         adata = run_pipeline(
