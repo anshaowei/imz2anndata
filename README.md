@@ -2,6 +2,10 @@
 
 `imz2anndata` converts `imzML` mass spectrometry imaging datasets into `AnnData` (`.h5ad`) for downstream spatial omics analysis.
 
+Mass spectrometry imaging (MSI) provides spatially resolved molecular measurements, but standard `imzML` files are not directly optimized for matrix-based computational workflows. `imz2anndata` turns `imzML` data into an analysis-ready `AnnData` representation by parsing spectra with spatial coordinates, applying adaptive spectral preprocessing, aligning signals into a shared `m/z` feature space, and building a sparse pixel-by-feature matrix while preserving spatial structure and preprocessing provenance.
+
+The workflow also supports spatial feature assessment and filtering based on abundance and spatial autocorrelation, making it easier to move from raw MSI exchange files to scalable downstream analysis in the Python scientific ecosystem.
+
 ## What It Does
 
 The conversion pipeline:
@@ -13,6 +17,17 @@ The conversion pipeline:
 5. Builds an `AnnData` object with sparse intensities, pixel metadata, and spatial coordinates.
 
 The output schema is summarized in [`docs/anndata_schema.md`](docs/anndata_schema.md).
+
+## Why AnnData
+
+`AnnData` provides a compact, matrix-oriented representation that fits naturally into modern analysis workflows. In the converted object:
+
+- `X` stores the sparse pixel-by-feature intensity matrix.
+- `obs` stores pixel-level metadata such as coordinates and TIC summaries.
+- `var` stores aligned `m/z` features.
+- `obsm["spatial"]` preserves the tissue coordinate system for spatial downstream analysis.
+
+This makes the converted MSI data easier to inspect, subset, benchmark, serialize, and integrate with existing Python tools.
 
 ## Installation
 
@@ -87,6 +102,15 @@ The notebook expects the local demo dataset files at:
 
 The mouse bladder MSI dataset is accessible via the ProteomeXchange Consortium under dataset identifier `PXD001283`.
 
+## Output Characteristics
+
+The converted `AnnData` object is designed to preserve information needed for downstream spatial analysis while remaining compact and practical to store:
+
+- sparse matrix storage for pixel-by-feature intensities
+- retained spatial coordinates for each pixel
+- recorded preprocessing decisions such as detected spectrum mode and peak-picking behavior
+- optional feature-level spatial statistics for assessment or filtering
+
 ## Tests
 
 Run the full test suite:
@@ -105,12 +129,14 @@ Integration tests look for local `.imzML` files under `data/` and `data/raw/`, a
 
 ## Local Data
 
-Local validation data is not committed by default. If you want to exercise the integration tests or run the demo notebook with real inputs, place files under:
+The repository does not include the raw bladder MSI dataset. To run the demo notebook or the real-data integration tests, download the dataset separately and place the files at:
 
 - `data/Bladder-MSI.imzML`
 - `data/Bladder-MSI.ibd`
 
-Optional alternative layout for integration tests:
+The mouse bladder MSI dataset is accessible via the ProteomeXchange Consortium under dataset identifier `PXD001283`.
+
+The integration tests also support an optional alternative layout:
 
 - `data/raw/sample.imzML`
 - `data/raw/sample.ibd`
